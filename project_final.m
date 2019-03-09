@@ -24,10 +24,10 @@ end
 
 % Prompts user for input and stores variables into answer cell array
 prompt = {'Enter your homeworks grades (seperated by spaces):','Enter your quiz grades (seperated by spaces):','Enter your exam grades (seperated by spaces):','Enter final project grade:'};
-title = 'ENGR120 Grade Calculator';
+dlgtitle = 'ENGR120 Grade Calculator';
 dims = [1 70]; % the size of input text field
-definput = {'55 66 77 88 55','60 70 60 55 90 77 65 63 50 98 88','75 60 79 81 88 99','100'}; % sample default inputs
-answer = inputdlg(prompt,title,dims,definput);
+definput = {'55 55 55','60 60 60 60 60 75 75 75 75 75 75','75 75 75 99 99 99','100'}; % sample default inputs
+answer = inputdlg(prompt,dlgtitle,dims,definput);
 
 % shows what the cell array looks like after user has input responses into corresponding text fields (i.e.
 % quiz, exam, final project, and homework grades
@@ -88,12 +88,17 @@ proj_weight = 0.1;
 quiz_weight= 0.1;
 exam_weight = 0.5;
 
+% compute total points for each seperate assignment (i.e. hw, quizzes,
+% projects, exams...)
 hw_final = (hw_tot/(100*hw_num))*hw_weight
 proj_final = (final_proj/100)*proj_weight
 quiz_final = (quiz_tot/(100*quiz_num))*quiz_weight
 exam_final = (exam_tot/(100*exam_num))*exam_weight
 
+% compute total weighted final grade in decimal
 tot_weight_grade = hw_final +proj_final + quiz_final + exam_final
+
+% conver total weighted final grade to percent
 perc_tot_weight_grade = tot_weight_grade * 100
 
 
@@ -103,10 +108,16 @@ perc_tot_weight_grade = tot_weight_grade * 100
 %calcGrade(grade,name)
 
 % testing plotting 
-x = 0:10:100
-%r1 = randi(100,1,30)
 figure;
-%plot(x, total)
+x = 1:length(quiz_vect)
+
+plot(x, quiz_vect)
+title('Quiz grades plot');
+xlabel('# of Quizes')
+ylabel('Score')
+ylim([0 100])
+grid on
+
 
 % Local function to calculate final grade in class
 function a = calcGrade(grade, name)
