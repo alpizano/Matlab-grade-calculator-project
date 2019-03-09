@@ -18,24 +18,26 @@ clear;
 
 % If the user enters a null name, and error will be thrown and loop back to
 % ask for name. The loop will continue, allowing for user to input multiple
-% grades per student to calculate multiple final grades UNTIL the user
-% inputs QUIT!
-op = "quit"
+% grades per student to calculate multiple final grades until the user
+% inputs EXIT (case-insensitive)
+
+op = "exit"
 
 while 1
-prompt = 'Hi, what''s your name? OR enter QUIT to exit loop!';
+prompt = 'Hi, what''s your name? or enter EXIT to exit the program: \n';
 test_name = input(prompt, 's');
 
 % error handling to check if the user input a name or an empty string!
 if(test_name == "")
     % pops up warning dialog box indicting empty string/name!
-    warndlg('Cmon, we know you have a name!!!','ERROR');
+    warndlg('Cmon, we know you have a name!','ERROR');
     continue;
-% if user types in QUIT, exit the loop!!!
-elseif(strcmp(test_name,op) == 1)
+% if user types in 'quit', exit the loop! lower() allows this to be
+% case-insensitive
+elseif(strcmp(lower(test_name),op) == 1)
     break;
 else
-    msgbox(sprintf('Hi %s!',test_name));
+    msgbox(sprintf('Hi %s!',test_name),'Welcome');
     fprintf('Hi %s', test_name)
     
 % Prompts user for input and stores variables into answer cell array
