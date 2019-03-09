@@ -11,17 +11,33 @@ clear;
 % conditionals, input from user, and output to screen, input checking and
 % matlab plots.
 
-prompt = 'Hi, what''s your name? ';
+% this while loop will continually loop, allowing user to input grades and
+% have the final grade calculated per weight listed in syllabus.
+% Furthermore, the grades will be plotted per assignment, and average
+% plotted on the same plot.
+
+% If the user enters a null name, and error will be thrown and loop back to
+% ask for name. The loop will continue, allowing for user to input multiple
+% grades per student to calculate multiple final grades UNTIL the user
+% inputs QUIT!
+op = "quit"
+
+while 1
+prompt = 'Hi, what''s your name? OR enter QUIT to exit loop!';
 test_name = input(prompt, 's');
 
 % error handling to check if the user input a name or an empty string!
 if(test_name == "")
     % pops up warning dialog box indicting empty string/name!
     warndlg('Cmon, we know you have a name!!!','ERROR');
+    continue;
+% if user types in QUIT, exit the loop!!!
+elseif(strcmp(test_name,op) == 1)
+    break;
 else
-    msgbox(sprintf('Hi %s!!!!',test_name));
-end
-
+    msgbox(sprintf('Hi %s!',test_name));
+    fprintf('Hi %s', test_name)
+    
 % Prompts user for input and stores variables into answer cell array
 prompt = {'Enter your homeworks grades (seperated by spaces):','Enter your quiz grades (seperated by spaces):','Enter your exam grades (seperated by spaces):','Enter final project grade:'};
 dlgtitle = 'ENGR120 Grade Calculator';
@@ -45,22 +61,22 @@ exam_num = 0;
 % arithmetic performed upon vector
 for i = 1:length(answer)
     if(i == 1)
-        hw_vect = str2num(answer{i})
-        hw_num = length(hw_vect)
+        hw_vect = str2num(answer{i});
+        hw_num = length(hw_vect);
             % iterate thru quiz vector
             for k = 1:length(hw_vect)
             hw_tot = hw_tot + hw_vect(k);
             end
     elseif(i == 2)
-        quiz_vect = str2num(answer{i})
-        quiz_num = length(quiz_vect)
+        quiz_vect = str2num(answer{i});
+        quiz_num = length(quiz_vect);
             % iterate thru quiz vector
             for k = 1:length(quiz_vect)
             quiz_tot = quiz_tot + quiz_vect(k);
             end
     elseif(i == 3)
         exam_vect = str2num(answer{i}); %converts string to int
-        exam_num = length(exam_vect)
+        exam_num = length(exam_vect);
             % iterate thru exam vector
             for k = 1:length(exam_vect)
             exam_tot = exam_tot + exam_vect(k);
@@ -86,29 +102,29 @@ proj_weight = 0.1;
 quiz_weight= 0.1;
 exam_weight = 0.5;
 
-quiz_avg = (quiz_tot/(100*quiz_num))*100
-hw_avg = (hw_tot/(100*hw_num))*100
-exam_avg = (exam_tot/(100*exam_num))*100
+quiz_avg = (quiz_tot/(100*quiz_num))*100;
+hw_avg = (hw_tot/(100*hw_num))*100;
+exam_avg = (exam_tot/(100*exam_num))*100;
 
 % compute total points for each seperate assignment (i.e. hw, quizzes,
 % projects, exams...)
-hw_final = (hw_tot/(100*hw_num))*hw_weight
-proj_final = (final_proj/100)*proj_weight
-quiz_final = (quiz_tot/(100*quiz_num))*quiz_weight
-exam_final = (exam_tot/(100*exam_num))*exam_weight
+hw_final = (hw_tot/(100*hw_num))*hw_weight;
+proj_final = (final_proj/100)*proj_weight;
+quiz_final = (quiz_tot/(100*quiz_num))*quiz_weight;
+exam_final = (exam_tot/(100*exam_num))*exam_weight;
 
 % compute total weighted final grade in decimal
-tot_weight_grade = hw_final +proj_final + quiz_final + exam_final
+tot_weight_grade = hw_final +proj_final + quiz_final + exam_final;
 
 % conver total weighted final grade to percent
-perc_tot_weight_grade = tot_weight_grade * 100
+perc_tot_weight_grade = tot_weight_grade * 100;
 
 %grade = ( (hw_tot/(100*hw_num))* (quiz_tot/(100*quiz_num))* (exam_tot/(100*exam_num)) * (final_proj/100) ) *100
 
 calcGrade(perc_tot_weight_grade,test_name)
 
 % Plotting homework grades & average on same plot
-hw_amt = 1:length(hw_vect)
+hw_amt = 1:length(hw_vect);
 figure;
 plot(hw_amt, hw_vect, 'gd')
 title('HW grades plot');
@@ -118,10 +134,10 @@ ylim([0 100])
 grid on
 hold on
 %plot the average quiz score
-plot (hw_amt, hw_avg*ones(size(hw_amt)))
+plot(hw_amt, hw_avg*ones(size(hw_amt)))
 
 % Plotting quizes grades & average on same plot
-quizes_amt = 1:length(quiz_vect)
+quizes_amt = 1:length(quiz_vect);
 figure;
 plot(quizes_amt, quiz_vect, 'gd')
 title('Quiz grades plot');
@@ -131,10 +147,10 @@ ylim([0 100])
 grid on
 hold on
 %plot the average quiz score
-plot (quizes_amt, quiz_avg*ones(size(quizes_amt)))
+plot(quizes_amt, quiz_avg*ones(size(quizes_amt)))
 
 % Plotting exam grades & average on same plot
-exam_amt = 1:length(exam_vect)
+exam_amt = 1:length(exam_vect);
 figure;
 plot(exam_amt, exam_vect, 'gd')
 title('Exam grades plot');
@@ -145,6 +161,9 @@ grid on
 hold on
 %plot the average quiz score
 plot (exam_amt, exam_avg*ones(size(exam_amt)))
+
+end
+end
 
 % Local function to calculate final grade in class
 function a = calcGrade(grade, name)
