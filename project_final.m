@@ -1,10 +1,10 @@
-% clear workspace variables and console window
-clc;
-clear;
-
 % Carlos Gonzalez
 % ENGR120
 % 3/8/2019
+
+% clear workspace variables and console window
+clc;
+clear;
 
 % This student calculator utilizes all the concepts on the grading rubrik.
 % ... From comments, example outputs, functions, loops, if-else
@@ -51,14 +51,14 @@ for i = 1:length(answer)
         hw_num = length(hw_vect)
             % iterate thru quiz vector
             for k = 1:length(hw_vect)
-            hw_tot = hw_tot + hw_vect(k)
+            hw_tot = hw_tot + hw_vect(k);
             end
     elseif(i == 2)
         quiz_vect = str2num(answer{i})
         quiz_num = length(quiz_vect)
             % iterate thru quiz vector
             for k = 1:length(quiz_vect)
-            quiz_tot = quiz_tot + quiz_vect(k)
+            quiz_tot = quiz_tot + quiz_vect(k);
             end
     elseif(i == 3)
         exam_vect = str2num(answer{i}); %converts string to int
@@ -82,8 +82,25 @@ end
 %exam_tot
 %exam_num * 100
 
-grade = ( (hw_tot/(100*hw_num))* (quiz_tot/(100*quiz_num))* (exam_tot/(100*exam_num)) * (final_proj/100) ) *100
-calcGrade(grade,name)
+% real weights to compute final grade per course syllabus
+hw_weight = 0.3;
+proj_weight = 0.1;
+quiz_weight= 0.1;
+exam_weight = 0.5;
+
+hw_final = (hw_tot/(100*hw_num))*hw_weight
+proj_final = (final_proj/100)*proj_weight
+quiz_final = (quiz_tot/(100*quiz_num))*quiz_weight
+exam_final = (exam_tot/(100*exam_num))*exam_weight
+
+tot_weight_grade = hw_final +proj_final + quiz_final + exam_final
+perc_tot_weight_grade = tot_weight_grade * 100
+
+
+%grade = ( (hw_tot/(100*hw_num))* (quiz_tot/(100*quiz_num))* (exam_tot/(100*exam_num)) * (final_proj/100) ) *100
+
+
+%calcGrade(grade,name)
 
 % testing plotting 
 x = 0:10:100
