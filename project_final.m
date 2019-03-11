@@ -3,8 +3,8 @@
 % 3/8/2019
 
 % clear workspace variables and console window
-clc;
-clear;
+clc
+clear
 
 % This student calculator utilizes all the concepts on the grading rubrik.
 % ... From comments, example outputs, functions, loops, if-else
